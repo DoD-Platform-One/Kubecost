@@ -17,4 +17,4 @@ dependencies:
 description: A Helm chart that sets up Kubecost, Prometheus, and Grafana to monitor
   cloud costs.
 name: cost-analyzer
-version: 1.93.2
+version: 1.93.2-bb.0
