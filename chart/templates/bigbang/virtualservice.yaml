@@ -1,16 +1,4 @@
 {{ if .Values.istio.enabled }}
-apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
-metadata:
-  name: {{ .Release.Name }}-ssl-destinationrule
-  labels:
-    {{ include "cost-analyzer.commonLabels" . | nindent 4 }}
-spec:
-  host: {{ .Release.Name }}-cost-analyzer.{{ .Release.Namespace }}.svc.cluster.local
-  trafficPolicy:
-    tls:
-      mode: SIMPLE
----
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
