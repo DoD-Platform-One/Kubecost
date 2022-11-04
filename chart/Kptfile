@@ -1,0 +1,11 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: chart
+upstream:
+  type: git
+  git:
+    commit: 0e79ad854fbe15d1c1fbb6f9d62760dc278e4729
+    repo: https://github.com/kubecost/cost-analyzer-helm-chart
+    directory: cost-analyzer
+    ref: v1.97.0
