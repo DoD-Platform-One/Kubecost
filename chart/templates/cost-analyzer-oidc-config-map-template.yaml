@@ -4,6 +4,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ template "cost-analyzer.fullname" . }}-oidc
+  namespace: {{ .Release.Namespace }}
   labels:
     {{ include "cost-analyzer.commonLabels" . | nindent 4 }}
 data:
@@ -15,7 +16,27 @@ data:
         "secretName" : "{{ .Values.oidc.secretName }}",
         "authURL" : "{{ .Values.oidc.authURL }}",
         "loginRedirectURL" : "{{ .Values.oidc.loginRedirectURL }}",
-        "discoveryURL" : "{{ .Values.oidc.discoveryURL }}"
+        "discoveryURL" : "{{ .Values.oidc.discoveryURL }}",
+        "hostedDomain" : "{{ .Values.oidc.hostedDomain }}",
+        "rbac" : {
+          "enabled" : {{ .Values.oidc.rbac.enabled }},
+          "groups" : [
+          {{- range $i, $g := .Values.oidc.rbac.groups }}
+          {{- if ne $i 0 }},{{- end }}
+          {
+            "roleName": "{{ $g.name }}",
+            "enabled": {{ $g.enabled }},
+            "claimName": "{{ $g.claimName }}",
+            "claimValues": [
+            {{- range $j, $v := $g.claimValues }}
+            {{- if ne $j 0 }},{{- end }}
+              "{{ $v }}"
+            {{- end }}
+            ]
+          }
+          {{- end }}
+          ]
+        }
       }
 {{- end -}}
 {{- end -}}

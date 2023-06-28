@@ -10,6 +10,7 @@ metadata:
   labels:
     {{- include "prometheus.nodeExporter.labels" . | nindent 4 }}
   name: {{ template "prometheus.nodeExporter.fullname" . }}
+  namespace: {{ .Release.Namespace }}
 spec:
   selector:
     matchLabels:
@@ -35,6 +36,9 @@ spec:
 {{ toYaml .Values.nodeExporter.affinity | indent 8 }}
 {{- end }}
       serviceAccountName: {{ template "prometheus.serviceAccountName.nodeExporter" . }}
+{{- if .Values.nodeExporter.dnsPolicy }}
+      dnsPolicy: "{{ .Values.nodeExporter.dnsPolicy }}"
+{{- end }}
 {{- if .Values.nodeExporter.priorityClassName }}
       priorityClassName: "{{ .Values.nodeExporter.priorityClassName }}"
 {{- end }}

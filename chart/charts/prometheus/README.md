@@ -126,8 +126,8 @@ Parameter | Description | Default
 --------- | ----------- | -------
 `alertmanager.enabled` | If true, create alertmanager | `true`
 `alertmanager.name` | alertmanager container name | `alertmanager`
-`alertmanager.image.repository` | alertmanager container image repository | `prom/alertmanager`
-`alertmanager.image.tag` | alertmanager container image tag | `v0.20.0`
+`alertmanager.image.repository` | alertmanager container image repository | `registry1.dso.mil/ironbank/opensource/prometheus/alertmanager`
+`alertmanager.image.tag` | alertmanager container image tag | `v0.25.0`
 `alertmanager.image.pullPolicy` | alertmanager container image pull policy | `IfNotPresent`
 `alertmanager.prefixURL` | The prefix slug at which the server can be accessed | ``
 `alertmanager.baseURL` | The external url at which the server can be accessed | `"http://localhost:9093"`
@@ -182,8 +182,8 @@ Parameter | Description | Default
 `alertmanagerFiles.alertmanager.yml` | Prometheus alertmanager configuration | example configuration
 `configmapReload.prometheus.enabled` | If false, the configmap-reload container for Prometheus will not be deployed | `true`
 `configmapReload.prometheus.name` | configmap-reload container name | `configmap-reload`
-`configmapReload.prometheus.image.repository` | configmap-reload container image repository | `jimmidyson/configmap-reload`
-`configmapReload.prometheus.image.tag` | configmap-reload container image tag | `v0.5.0`
+`configmapReload.prometheus.image.repository` | configmap-reload container image repository | `registry1.dso.mil/ironbank/opensource/jimmidyson/configmap-reload`
+`configmapReload.prometheus.image.tag` | configmap-reload container image tag | `v0.7.1`
 `configmapReload.prometheus.image.pullPolicy` | configmap-reload container image pull policy | `IfNotPresent`
 `configmapReload.prometheus.extraArgs` | Additional configmap-reload container arguments | `{}`
 `configmapReload.prometheus.extraVolumeDirs` | Additional configmap-reload volume directories | `{}`
@@ -191,8 +191,8 @@ Parameter | Description | Default
 `configmapReload.prometheus.resources` | configmap-reload pod resource requests & limits | `{}`
 `configmapReload.alertmanager.enabled` | If false, the configmap-reload container for AlertManager will not be deployed | `true`
 `configmapReload.alertmanager.name` | configmap-reload container name | `configmap-reload`
-`configmapReload.alertmanager.image.repository` | configmap-reload container image repository | `jimmidyson/configmap-reload`
-`configmapReload.alertmanager.image.tag` | configmap-reload container image tag | `v0.5.0`
+`configmapReload.alertmanager.image.repository` | configmap-reload container image repository | `registry1.dso.mil/ironbank/opensource/jimmidyson/configmap-reload`
+`configmapReload.alertmanager.image.tag` | configmap-reload container image tag | `v0.7.1`
 `configmapReload.alertmanager.image.pullPolicy` | configmap-reload container image pull policy | `IfNotPresent`
 `configmapReload.alertmanager.extraArgs` | Additional configmap-reload container arguments | `{}`
 `configmapReload.alertmanager.extraVolumeDirs` | Additional configmap-reload volume directories | `{}`
@@ -206,9 +206,10 @@ Parameter | Description | Default
 `initChownData.resources` | init-chown-data pod resource requests & limits | `{}`
 `kube-state-metrics.disabled` | If false, create kube-state-metrics sub-chart, see the [kube-state-metrics chart for configuration options](https://github.com/helm/charts/tree/master/stable/kube-state-metrics) | `false`
 `nodeExporter.enabled` | If true, create node-exporter | `true`
+`nodeExporter.dnsPolicy` | node-exporter dns policy | `ClusterFirstWithHostNet`
 `nodeExporter.name` | node-exporter container name | `node-exporter`
-`nodeExporter.image.repository` | node-exporter container image repository| `prom/node-exporter`
-`nodeExporter.image.tag` | node-exporter container image tag | `v0.18.1`
+`nodeExporter.image.repository` | node-exporter container image repository| `registry1.dso.mil/ironbank/opensource/prometheus/node-exporter`
+`nodeExporter.image.tag` | node-exporter container image tag | `v1.5.0`
 `nodeExporter.image.pullPolicy` | node-exporter container image pull policy | `IfNotPresent`
 `nodeExporter.extraArgs` | Additional node-exporter container arguments | `{}`
 `nodeExporter.extraHostPathMounts` | Additional node-exporter hostPath mounts | `[]`
@@ -237,8 +238,8 @@ Parameter | Description | Default
 `podSecurityPolicy.enabled` | If true, create & use pod security policies resources | `false`
 `pushgateway.enabled` | If true, create pushgateway | `true`
 `pushgateway.name` | pushgateway container name | `pushgateway`
-`pushgateway.image.repository` | pushgateway container image repository | `prom/pushgateway`
-`pushgateway.image.tag` | pushgateway container image tag | `v1.0.1`
+`pushgateway.image.repository` | pushgateway container image repository | `registry1.dso.mil/ironbank/opensource/prometheus/pushgateway`
+`pushgateway.image.tag` | pushgateway container image tag | `v1.5.1`
 `pushgateway.image.pullPolicy` | pushgateway container image pull policy | `IfNotPresent`
 `pushgateway.extraArgs` | Additional pushgateway container arguments | `{}`
 `pushgateway.ingress.enabled` | If true, pushgateway Ingress will be created | `false`
@@ -276,8 +277,8 @@ Parameter | Description | Default
 `rbac.create` | If true, create & use RBAC resources | `true`
 `server.enabled` | If false, Prometheus server will not be created | `true`
 `server.name` | Prometheus server container name | `server`
-`server.image.repository` | Prometheus server container image repository | `prom/prometheus`
-`server.image.tag` | Prometheus server container image tag | `v2.16.0`
+`server.image.repository` | Prometheus server container image repository | `registry1.dso.mil/ironbank/opensource/prometheus/prometheus`
+`server.image.tag` | Prometheus server container image tag | `v2.35.0`
 `server.image.pullPolicy` | Prometheus server container image pull policy | `IfNotPresent`
 `server.configPath` |  Path to a prometheus server config file on the container FS  | `/etc/config/prometheus.yml`
 `server.global.scrape_interval` | How frequently to scrape targets by default | `1m`
@@ -362,6 +363,7 @@ Parameter | Description | Default
 `serviceAccounts.pushgateway.name` | name of the pushgateway service account to use or create | `{{ prometheus.pushgateway.fullname }}`
 `serviceAccounts.server.create` | If true, create the server service account | `true`
 `serviceAccounts.server.name` | name of the server service account to use or create | `{{ prometheus.server.fullname }}`
+`serviceAccounts.server.annotations` | annotations for the server service account | `{}`
 `server.terminationGracePeriodSeconds` | Prometheus server Pod termination grace period | `300`
 `server.retention` | (optional) Prometheus data retention | `"15d"`
 `serverFiles.alerts` | (Deprecated) Prometheus server alerts configuration | `{}`

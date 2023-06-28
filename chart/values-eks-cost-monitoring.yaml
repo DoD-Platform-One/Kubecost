@@ -7,7 +7,7 @@ pricingCsv:
   enabled: false
   location:
     provider: "AWS"
-    region: "us-east-1" 
+    region: "us-east-1"
     URI: s3://kc-csv-test/pricing_schema.csv # a valid file URI
     csvAccessCredentials: pricing-schema-access-secret
 
@@ -33,9 +33,11 @@ networkPolicy:
 podSecurityPolicy:
   enabled: false
 
-imageVersion: prod-1.96.0
+# Enable this flag if you need to install with specfic image tags
+# imageVersion: prod-1.103.3
+
 kubecostFrontend:
-  image: public.ecr.aws/kubecost/frontend
+  image: registry1.dso.mil/ironbank/kubecost/frontend
   imagePullPolicy: Always
   resources:
     requests:
@@ -44,9 +46,9 @@ kubecostFrontend:
     #limits:
     #  cpu: "100m"
     #  memory: "256Mi"
-  
+
 kubecostModel:
-  image: public.ecr.aws/kubecost/cost-model
+  image: registry1.dso.mil/ironbank/kubecost/cost-model
   imagePullPolicy: Always
   warmCache: true
   warmSavingsCache: true
@@ -110,7 +112,7 @@ prometheus:
     # NOTE: This does not affect the external_labels set in prometheus config.
     # clusterIDConfigmap: cluster-id-configmap
     image:
-      repository: public.ecr.aws/kubecost/prometheus
+      repository: registry1.dso.mil/ironbank/opensource/prometheus/prometheus
       tag: v2.35.0
     resources: {}
     # limits:
@@ -141,7 +143,7 @@ prometheus:
     prometheus:
       ## If false, the configmap-reload container will not be deployed
       ##
-      enabled: true
+      enabled: false
 
       ## configmap-reload container name
       ##
@@ -149,7 +151,7 @@ prometheus:
       ## configmap-reload container image
       ##
       image:
-        repository: public.ecr.aws/bitnami/configmap-reload
+        repository: registry1.dso.mil/ironbank/opensource/jimmidyson/configmap-reload
         tag: 0.7.1
         pullPolicy: IfNotPresent
       ## Additional configmap-reload container arguments
@@ -170,7 +172,7 @@ prometheus:
       ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
       ##
       resources: {}
-     
+
   kube-state-metrics:
     disabled: false
   nodeExporter:
