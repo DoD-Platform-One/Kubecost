@@ -1,6 +1,6 @@
 # cost-analyzer
 
-![Version: 1.97.0-bb.0](https://img.shields.io/badge/Version-1.97.0--bb.0-informational?style=flat-square) ![AppVersion: 1.97.0](https://img.shields.io/badge/AppVersion-1.97.0-informational?style=flat-square)
+![Version: 1.03.3-bb.0](https://img.shields.io/badge/Version-1.103.3--bb.0-informational?style=flat-square) ![AppVersion: 1.103.3](https://img.shields.io/badge/AppVersion-1.103.3-informational?style=flat-square)
 
 A Helm chart that sets up Kubecost, Prometheus, and Grafana to monitor cloud costs.
 
@@ -114,7 +114,7 @@ helm install cost-analyzer chart/
 | systemProxy.httpProxyUrl | string | `""` |  |
 | systemProxy.httpsProxyUrl | string | `""` |  |
 | systemProxy.noProxy | string | `""` |  |
-| kubecostFrontend.image | string | `"gcr.io/kubecost1/frontend"` |  |
+| kubecostFrontend.image | string | `"registry1.dso.mil/ironbank/kubecost/frontend"` |  |
 | kubecostFrontend.imagePullPolicy | string | `"Always"` |  |
 | kubecostFrontend.resources.requests.cpu | string | `"10m"` |  |
 | kubecostFrontend.resources.requests.memory | string | `"55Mi"` |  |
@@ -139,7 +139,7 @@ helm install cost-analyzer chart/
 | sigV4Proxy.region | string | `"us-west-2"` |  |
 | sigV4Proxy.host | string | `"aps-workspaces.us-west-2.amazonaws.com"` |  |
 | sigV4Proxy.extraEnv | string | `nil` |  |
-| kubecostModel.image | string | `"gcr.io/kubecost1/cost-model"` |  |
+| kubecostModel.image | string | `"registry1.dso.mil/ironbank/kubecost/cost-model"` |  |
 | kubecostModel.imagePullPolicy | string | `"Always"` |  |
 | kubecostModel.outOfClusterPromMetricsEnabled | bool | `false` |  |
 | kubecostModel.warmCache | bool | `false` |  |
