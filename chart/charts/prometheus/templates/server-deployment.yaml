@@ -60,6 +60,10 @@ spec:
           {{- end }}
           resources:
 {{ toYaml .Values.configmapReload.prometheus.resources | indent 12 }}
+          {{- with .Values.configmapReload.prometheus.containerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
             {{- if .Values.selfsignedCertConfigMapName }}
             - name: {{ .Values.selfsignedCertConfigMapName }}
@@ -88,6 +92,9 @@ spec:
           args:
           {{- if .Values.server.retention }}
             - --storage.tsdb.retention.time={{ .Values.server.retention }}
+          {{- end }}
+          {{- if .Values.server.retentionSize }}
+            - --storage.tsdb.retention.size={{ .Values.server.retentionSize }}
           {{- end }}
             - --config.file={{ .Values.server.configPath }}
             - --storage.tsdb.path={{ .Values.server.persistentVolume.mountPath }}
@@ -123,6 +130,10 @@ spec:
             successThreshold: {{ .Values.server.livenessProbeSuccessThreshold }}
           resources:
 {{ toYaml .Values.server.resources | indent 12 }}
+          {{- with .Values.server.containerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - name: config-volume
               mountPath: /etc/config

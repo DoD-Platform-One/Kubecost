@@ -34,7 +34,7 @@ podSecurityPolicy:
   enabled: false
 
 # Enable this flag if you need to install with specfic image tags
-# imageVersion: prod-1.103.3
+# imageVersion: prod-1.97.0
 
 kubecostFrontend:
   image: registry1.dso.mil/ironbank/kubecost/frontend
