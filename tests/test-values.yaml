@@ -1,0 +1,17 @@
+prometheus:
+  imagePullSecrets:
+    - name: private-registry
+  kubeStateMetrics:
+    enabled: false
+  kube-state-metrics:
+    disabled: true
+    serviceAccount:
+      imagePullSecrets:
+        - name: private-registry
+grafana:
+  image:
+    pullSecrets:
+      - private-registry
+imagePullSecrets:
+  - name: private-registry
+

@@ -14,8 +14,8 @@ $ helm install stable/kube-state-metrics
 
 | Parameter                                    | Description                                                                           | Default                                    |
 |:---------------------------------------------|:--------------------------------------------------------------------------------------|:-------------------------------------------|
-| `image.repository`                           | The image repository to pull from                                                     | quay.io/coreos/kube-state-metrics          |
-| `image.tag`                                  | The image tag to pull from                                                            | `v1.9.5`                                   |
+| `image.repository`                           | The image repository to pull from                                                     | registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics          |
+| `image.tag`                                  | The image tag to pull from                                                            | `v2.8.2`                                   |
 | `image.pullPolicy`                           | Image pull policy                                                                     | `IfNotPresent`                             |
 | `replicas`                                   | Number of replicas                                                                    | `1`                                        |
 | `autosharding.enabled`                       | Set to `true` to automatically shard data across `replicas` pods. EXPERIMENTAL        | `false`                                    |
@@ -49,7 +49,7 @@ $ helm install stable/kube-state-metrics
 | `collectors.ingresses`                       | Enable the ingresses collector.                                                       | `true`                                     |
 | `collectors.jobs`                            | Enable the jobs collector.                                                            | `true`                                     |
 | `collectors.limitranges`                     | Enable the limitranges collector.                                                     | `true`                                     |
-| `collectors.mutatingwebhookconfigurations`   | Enable the mutatingwebhookconfigurations collector.                                   | `false`                                    | 
+| `collectors.mutatingwebhookconfigurations`   | Enable the mutatingwebhookconfigurations collector.                                   | `false`                                    |
 | `collectors.namespaces`                      | Enable the namespaces collector.                                                      | `true`                                     |
 | `collectors.nodes`                           | Enable the nodes collector.                                                           | `true`                                     |
 | `collectors.persistentvolumeclaims`          | Enable the persistentvolumeclaims collector.                                          | `true`                                     |
