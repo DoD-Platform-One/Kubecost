@@ -1132,3 +1132,8 @@ extraObjects: []
 #               number: 80
 
 
+# bigbang specific values
+istio:
+  enabled: false
+  # host: ""
+  # gateways: []

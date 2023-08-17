@@ -1,8 +1,8 @@
 # Default values for kube-state-metrics.
 prometheusScrape: true
 image:
-  repository: registry.k8s.io/kube-state-metrics/kube-state-metrics
-  tag: v1.9.8
+  repository: registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics
+  tag: v2.8.2
   pullPolicy: IfNotPresent
 
 # If set to true, this will deploy kube-state-metrics as a StatefulSet and the data

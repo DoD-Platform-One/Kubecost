@@ -1,6 +1,6 @@
 # cost-analyzer
 
-![Version: 1.105.1-bb.0](https://img.shields.io/badge/Version-1.105.1--bb.0-informational?style=flat-square) ![AppVersion: 1.105.1](https://img.shields.io/badge/AppVersion-1.105.1-informational?style=flat-square)
+![Version: 1.105.1-bb.1](https://img.shields.io/badge/Version-1.105.1--bb.1-informational?style=flat-square) ![AppVersion: 1.105.1](https://img.shields.io/badge/AppVersion-1.105.1-informational?style=flat-square)
 
 A Helm chart that sets up Kubecost, Prometheus, and Grafana to monitor cloud costs.
 
