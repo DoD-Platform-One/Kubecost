@@ -24,7 +24,7 @@ spec:
     - name: private-registry
   containers:
   - name: test-kubecost
-    image: registry1.dso.mil/ironbank/big-bang/utilities:1.0.1-ubi9
+    image: registry1.dso.mil/ironbank/big-bang/utilities:1.0.2
     securityContext:
       privileged: false
       capabilities:
