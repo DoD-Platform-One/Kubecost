@@ -1,6 +1,6 @@
 # Kubecost Helm chart
 
-Helm chart for the Kubecost project, which is created to monitor and manage Kubernetes resource spend. Please see the [website](https://www.kubecost.com/) for more details on what Kubecost can do for you and the official documentation [here](https://docs.kubecost.com/), or contact [team@kubecost.com](mailto:team@kubecost.com) for assistance.
+Helm chart for [Kubecost](https://www.kubecost.com/), an enterprise-grade application to monitor and manage Kubernetes spend. Please see the [website](https://www.kubecost.com/) for more details on what Kubecost can do for you and the official documentation [here](https://docs.kubecost.com/), or contact [team@kubecost.com](mailto:team@kubecost.com) for assistance.
 
 To install via Helm, run the following command.
 
@@ -67,6 +67,8 @@ The following table lists commonly used configuration parameters for the Kubecos
 | `prometheusRule.enabled`                                                           | Set this to `true` to create PrometheusRule for Prometheus operator                                                                                          | `false`                                               |
 | `prometheusRule.additionalLabels`                                                  | Additional labels that can be used so PrometheusRule will be discovered by Prometheus                                                                        | `{}`                                                  |
 | `grafana.resources`                                                                | Grafana resource requests and limits.                                                                                                                        | `{}`                                                  |
+| `grafana.serviceAccount.create`                                                    | If true, create a Service Account for Grafana.                                                                                                               | `true`                                                |
+| `grafana.serviceAccount.name`                                                      | Grafana Service Account name.                                                                                                                                | `{}`                                                  |
 | `grafana.sidecar.datasources.defaultDatasourceEnabled`                             | Set this to `false` to disable creation of Prometheus datasource in Grafana                                                                                  | `true`                                                |
 | `serviceAccount.create`                                                            | Set this to `false` if you want to create the service account `kubecost-cost-analyzer` on your own                                                           | `true`                                                |
 | `tolerations`                                                                      | node taints to tolerate                                                                                                                                      | `[]`                                                  |
