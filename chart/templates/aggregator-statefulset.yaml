@@ -44,18 +44,15 @@ spec:
       labels:
         app.kubernetes.io/name: aggregator
         app.kubernetes.io/instance: {{ .Release.Name }}
-        {{/* Force pod restarts on upgrades to ensure the nginx config is current */}}
-        {{- if not .Values.global.platforms.cicd.enabled }}
-        helm-rollout-restarter: {{ randAlphaNum 5 | quote }}
-        {{- end }}
         app: aggregator
         {{- with .Values.global.additionalLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
-      {{- with .Values.global.podAnnotations}}
       annotations:
+        {{- with .Values.global.podAnnotations}}
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- end }}
+        checksum/configs: {{ include "configsChecksum" . }}
     spec:
       restartPolicy: Always
     {{- if .Values.kubecostAggregator.securityContext }}
@@ -77,19 +74,23 @@ spec:
         {{- if .Values.kubecostModel.federatedStorageConfigSecret }}
             {{- $etlBackupBucketSecret = .Values.kubecostModel.federatedStorageConfigSecret }}
         {{- end }}
-        {{- if $etlBackupBucketSecret }}
-        {{- if .Values.kubecostModel.federatedStorageConfigSecret }}
+        {{- if or $etlBackupBucketSecret .Values.kubecostModel.federatedStorageConfig }}
+        {{- if or .Values.kubecostModel.federatedStorageConfigSecret .Values.kubecostModel.federatedStorageConfig }}
         - name: federated-storage-config
           secret:
             defaultMode: 420
+            {{- if .Values.kubecostModel.federatedStorageConfigSecret }}
             secretName: {{ .Values.kubecostModel.federatedStorageConfigSecret }}
+            {{- else }}
+            secretName: federated-store
+            {{- end }}
         {{- end }}
         - name: etl-bucket-config
           secret:
             defaultMode: 420
-            secretName: {{ $etlBackupBucketSecret }}
+            secretName: {{ $etlBackupBucketSecret | default "federated-store" }}
         {{- else }}
-        {{- fail "\n\nKubecost Aggregator Enterprise Config requires .Values.kubecostModel.federatedStorageConfigSecret" }}
+        {{- fail "\n\nKubecost Aggregator Enterprise Config requires either .Values.kubecostModel.federatedStorageConfigSecret or .Values.kubecostModel.federatedStorageConfig" }}
         {{- end }}
         {{- if and ((.Values.kubecostProductConfigs).productKey).enabled ((.Values.kubecostProductConfigs).productKey).secretname }}
         - name: productkey-secret
@@ -98,6 +99,14 @@ spec:
             items:
             - key: productkey.json
               path: productkey.json
+        {{- end }}
+        {{- if ((.Values.kubecostProductConfigs).smtp).secretname }}
+        - name: smtp-secret
+          secret:
+            secretName: {{ .Values.kubecostProductConfigs.smtp.secretname }}
+            items:
+            - key: smtp.json
+              path: smtp.json
         {{- end }}
         {{- if .Values.saml }}
         {{- if .Values.saml.enabled }}
@@ -147,6 +156,18 @@ spec:
             secretName: {{ .Values.oidc.existingCustomSecret.name }}
         {{- end }}
         {{- end }}
+        {{- end }}
+        {{- if .Values.global.integrations.postgres.enabled }}
+        - name: postgres-creds
+          secret:
+            {{- if not (eq .Values.global.integrations.postgres.databaseSecretName "") }}
+            secretName: {{ .Values.global.integrations.postgres.databaseSecretName }}
+            {{- else }}
+            secretName: kubecost-integrations-postgres
+            {{- end }}
+        - name: postgres-queries
+          configMap:
+            name: kubecost-integrations-postgres-queries
         {{- end }}
         {{- if .Values.kubecostAggregator.extraVolumes }}
         {{- toYaml .Values.kubecostAggregator.extraVolumes | nindent 8 }}
