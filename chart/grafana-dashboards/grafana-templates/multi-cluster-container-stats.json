@@ -1,4 +1,35 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_THANOS",
+      "label": "Thanos",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.3.1"
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -26,14 +57,14 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 9063,
   "graphTooltip": 0,
-  "id": 4,
+  "id": null,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "Thanos"
+        "uid": "${DS_THANOS}"
       },
       "description": "Maximum CPU Core Usage vs avg Requested",
       "fieldConfig": {
@@ -120,7 +151,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "Thanos"
+            "uid": "${DS_THANOS}"
           },
           "editorMode": "code",
           "expr": "max(irate(container_cpu_usage_seconds_total\r\n    {cluster_id=\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\", container=~\"$container\", container!=\"POD\",container!=\"\"}\r\n    [$__rate_interval])) \r\n    by (cluster_id, namespace, pod, container)",
@@ -137,7 +168,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "Thanos"
+            "uid": "${DS_THANOS}"
           },
           "editorMode": "code",
           "exemplar": true,
@@ -154,7 +185,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "Thanos"
+        "uid": "${DS_THANOS}"
       },
       "description": "Max memory used vs avg requested",
       "fieldConfig": {
@@ -241,7 +272,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "Thanos"
+            "uid": "${DS_THANOS}"
           },
           "editorMode": "code",
           "expr": "max(max_over_time(container_memory_working_set_bytes\r\n  {namespace=~\"$namespace\",pod=~\"$pod\",cluster_id=\"$cluster\",container=~\"$container\",container!=\"POD\",container!=\"\"}\r\n  [$__rate_interval])) \r\nby (cluster_id,namespace,pod,container)",
@@ -258,7 +289,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "Thanos"
+            "uid": "${DS_THANOS}"
           },
           "editorMode": "code",
           "expr": "avg(kube_pod_container_resource_requests\n  {resource=\"memory\",unit=\"byte\",cluster_id=\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\", container=~\"$container\",container!=\"POD\"}\n  )\nby (cluster_id,namespace,pod,container)",
@@ -277,7 +308,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "Thanos"
+        "uid": "${DS_THANOS}"
       },
       "description": "Network traffic by pod",
       "fieldConfig": {
@@ -363,7 +394,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "Thanos"
+            "uid": "${DS_THANOS}"
           },
           "editorMode": "code",
           "expr": "sum(irate(container_network_receive_bytes_total\n  {cluster_id=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\"}\n  [$__rate_interval])) \nby (cluster_id, namespace, pod)",
@@ -380,7 +411,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "Thanos"
+            "uid": "${DS_THANOS}"
           },
           "editorMode": "code",
           "expr": "- sum(irate(container_network_transmit_bytes_total\n  {cluster_id=\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\"}\n  [$__rate_interval])) \nby (cluster_id, namespace, pod)",
@@ -400,7 +431,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "Thanos"
+        "uid": "${DS_THANOS}"
       },
       "description": "Disk read writes",
       "fieldConfig": {
@@ -486,7 +517,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "Thanos"
+            "uid": "${DS_THANOS}"
           },
           "editorMode": "code",
           "expr": "sum(irate(container_fs_writes_bytes_total\r\n    {cluster_id=\"$cluster\",namespace=~\"$namespace\",container!=\"POD\",pod!=\"\",pod=~\"$pod\",container=~\"$container\"}\r\n     [$__rate_interval])) \r\nby (cluster_id,namespace,pod,container)",
@@ -503,7 +534,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "Thanos"
+            "uid": "${DS_THANOS}"
           },
           "editorMode": "code",
           "expr": "- sum(irate(container_fs_reads_bytes_total\r\n     {cluster_id=\"$cluster\",namespace=~\"$namespace\",container!=\"POD\",pod!=\"\",pod=~\"$pod\",container=~\"$container\"}\r\n     [$__rate_interval])) \r\nby (cluster_id,namespace,pod,container)",
@@ -523,7 +554,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "Thanos"
+        "uid": "${DS_THANOS}"
       },
       "description": "This graph shows the % of periods where a pod is being throttled. Values range from 0-100",
       "fieldConfig": {
@@ -610,7 +641,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "Thanos"
+            "uid": "${DS_THANOS}"
           },
           "editorMode": "code",
           "expr": "100\n  * sum by(cluster_id, namespace, pod, container) (increase(container_cpu_cfs_throttled_periods_total{container!=\"\",cluster_id=\"$cluster\", namespace=~\"$namespace\", pod=~\"$pod\", container=~\"$container\", container!=\"POD\"}[$__rate_interval]))\n  / sum by(cluster_id,namespace,pod,container) (increase(container_cpu_cfs_periods_total{container!=\"\",cluster_id=\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\",container=~\"$container\",container!=\"POD\"}[$__rate_interval]))",
@@ -630,19 +661,15 @@
   "refresh": "",
   "revision": 1,
   "schemaVersion": 39,
-  "tags": [],
+  "tags": [
+    "utilization",
+    "metrics",
+    "kubecost"
+],
   "templating": {
     "list": [
       {
-        "current": {
-          "selected": false,
-          "text": "CostManagement",
-          "value": "CostManagement"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "Thanos"
-        },
+        "current": {},
         "definition": "label_values(cluster_id)",
         "hide": 0,
         "includeAll": false,
@@ -660,15 +687,7 @@
         "type": "query"
       },
       {
-        "current": {
-          "selected": false,
-          "text": "kubecost",
-          "value": "kubecost"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "Thanos"
-        },
+        "current": {},
         "definition": "label_values(kube_namespace_labels{cluster_id=\"$cluster\"}, namespace) ",
         "hide": 0,
         "includeAll": true,
@@ -690,15 +709,7 @@
         "useTags": false
       },
       {
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "Thanos"
-        },
+        "current": {},
         "definition": "label_values(kube_pod_labels{cluster_id=\"$cluster\",namespace=~\"$namespace\"}, pod) ",
         "hide": 0,
         "includeAll": true,
@@ -720,15 +731,7 @@
         "useTags": false
       },
       {
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "Thanos"
-        },
+        "current": {},
         "definition": "label_values(container_memory_working_set_bytes{cluster_id=\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\", container!=\"POD\"}, container) ",
         "hide": 0,
         "includeAll": true,
@@ -779,6 +782,6 @@
   "timezone": "browser",
   "title": "Pod utilization metrics (multi-cluster)",
   "uid": "at-cost-analysis-pod2",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }

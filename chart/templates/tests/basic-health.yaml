@@ -10,6 +10,8 @@ metadata:
     app: basic-health
     app.kubernetes.io/name: basic-health
     app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    version: {{ .Chart.AppVersion }}
 spec:
   automountServiceAccountToken: false
   restartPolicy: Never

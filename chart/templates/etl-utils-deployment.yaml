@@ -7,6 +7,9 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "etlUtils.commonLabels" . | nindent 4 }}
+    {{- with .Values.global.additionalLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   {{- with .Values.global.podAnnotations}}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -24,6 +27,9 @@ spec:
         app.kubernetes.io/name: {{ template "etlUtils.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
         app: {{ template "etlUtils.name" . }}
+        {{- with .Values.global.additionalLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       restartPolicy: Always
       volumes:
@@ -33,11 +39,11 @@ spec:
             defaultMode: 420
             secretName: {{ .Values.etlUtils.thanosSourceBucketSecret }}
         {{- end }}
-        {{- if .Values.kubecostModel.federatedStorageConfigSecret }}
+        {{- if or .Values.kubecostModel.federatedStorageConfigSecret .Values.kubecostModel.federatedStorageConfig}}
         - name: federated-storage-config
           secret:
             defaultMode: 420
-            secretName: {{ .Values.kubecostModel.federatedStorageConfigSecret }}
+            secretName: {{ .Values.kubecostModel.federatedStorageConfigSecret | default "federated-store" }}
         {{- end }}
       serviceAccountName: {{ template "cost-analyzer.serviceAccountName" . }}
       containers:

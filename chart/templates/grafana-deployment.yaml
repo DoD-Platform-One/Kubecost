@@ -8,6 +8,13 @@ metadata:
     app: {{ template "grafana.name" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
+    app.kubernetes.io/name: {{ template "grafana.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    version: {{ .Chart.AppVersion }}
+    {{- with .Values.global.additionalLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 {{- with .Values.grafana.annotations }}
   annotations:
 {{ toYaml . | indent 4 }}
