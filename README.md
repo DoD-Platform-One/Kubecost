@@ -1,3 +1,7 @@
+# DEPRECATED
+
+This repository is no longer maintained by PBOps. The new repo, which stores a direct copy of the upstream Helm Chart, is https://repo1.dso.mil/platform-one/party-bus/partybus-helmcharts/.
+
 # cost-analyzer
 
 ![Version: 2.4.2-bb.0](https://img.shields.io/badge/Version-2.4.2--bb.0-informational?style=flat-square) ![AppVersion: 2.4.2](https://img.shields.io/badge/AppVersion-2.4.2-informational?style=flat-square)
